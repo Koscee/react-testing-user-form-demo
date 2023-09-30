@@ -46,3 +46,21 @@ test('it calls onUserAdd when the form is submitted', () => {
     email: 'andrew02@hotmail.com',
   });
 });
+
+test('it clears the two inputs when form is submitted', () => {
+  render(<UserForm onUserAdd={() => {}} />);
+
+  const nameInput = screen.getByRole('textbox', { name: /name/i });
+  const emailInput = screen.getByRole('textbox', { name: /email/i });
+  const button = screen.getByRole('button');
+
+  user.click(nameInput);
+  user.keyboard('andrew');
+  user.click(emailInput);
+  user.keyboard('andrew02@hotmail.com');
+
+  user.click(button);
+
+  expect(nameInput).toHaveValue('');
+  expect(emailInput).toHaveValue('');
+});
